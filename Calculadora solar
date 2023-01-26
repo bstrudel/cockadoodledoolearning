@@ -1,0 +1,47 @@
+def calculadora_solar(local, fatura_ou_consumo, tipo_de_medida):
+    # Dados de radiação solar para diferentes locais
+    radiacao_solar = {
+        'São Paulo': 4.5,
+        'Rio de Janeiro': 5.0,
+        'Belo Horizonte': 4.2,
+        'Salvador': 5.5,
+        'Fortaleza': 6.0,
+    }
+    # Taxa de conversão de energia (normalmente entre 15-20%)
+    taxa_conversao = 0.2
+    # Consumo médio de uma residência (em kWh)
+    consumo_medio = 500
+    # Preço médio de um painel fotovoltaico (em reais)
+    preco_medio_painel = 1000
+    
+    # Verifica se o local informado é válido
+    if local not in radiacao_solar:
+        return "Local inválido"
+    
+    # Verifica se a medida informada é válida
+    if tipo_de_medida != "fatura" and tipo_de_medida != "consumo":
+        return "Tipo de medida inválida"
+    
+    # Calcula a produção de energia necessária
+    if tipo_de_medida == "fatura":
+        consumo = fatura_ou_consumo / 0.3 #supondo que o valor da tarifa é 0.3 centavos/kwh
+    else:
+        consumo = fatura_ou_consumo
+        
+    producao_necessaria = consumo / taxa_conversao
+    
+    # Calcula a área necessária de painéis fotovoltaicos
+    area_necessaria = producao_necessaria / radiacao_solar[local]
+    
+    # Calcula o número de painéis fotovoltaicos necessários
+    numero_paineis = area_necessaria / 1.6 # 1.6 m² é a área média de um painel fotovoltaico
+    
+    # Calcula o custo total da instalação
+    custo_total = numero_paineis * preco_medio_painel
+    
+    return {
+        'producao_necessaria': producao_necessaria,
+        'area_necessaria': area_necessaria,
+        'numero_paineis': numero_paineis,
+        'custo_total': custo_total
+    }
